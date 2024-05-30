@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class OperatorTest {
 
+    // map transforms the published object synchronously
     @Test
     void map(){
         Flux.range(1,5)
@@ -14,6 +15,8 @@ public class OperatorTest {
                 .subscribe(System.out::println);
     }
 
+    // Transforms the published object asynchronously by returning Mono<T> or Flux<T>
+    // flatMap will flatten all the publishers into a single one
     @Test
     void flatMap(){
         Flux.range(1,5)
@@ -21,6 +24,8 @@ public class OperatorTest {
                 .subscribe(System.out::println);
     }
 
+    // flatMapToMany converts a Mono to a Flux
+    // 3 -> 1,2,3
     @Test
     void flatMapToMany(){
         Mono.just(3)
@@ -33,6 +38,7 @@ public class OperatorTest {
         Flux<Integer> oneToFive = Flux.range(1,5).delayElements(Duration.ofMillis(200));
         Flux<Integer> sixToTen = Flux.range(6,5).delayElements(Duration.ofMillis(400));
 
+        // creates a sequential Flux from the two -> 1,2,3,5...
         Flux.concat(oneToFive, sixToTen).subscribe(System.out::println);
         //Thread.sleep(4000);
     }
@@ -41,9 +47,9 @@ public class OperatorTest {
     void merge() throws InterruptedException {
         Flux<Integer> oneToFive = Flux.range(1,5).delayElements(Duration.ofMillis(200));
         Flux<Integer> sixToTen = Flux.range(6,5).delayElements(Duration.ofMillis(400));
-
+        // Merge interleaves the two Flux and loses the sequence
         Flux.merge(oneToFive, sixToTen).subscribe(System.out::println);
-       // Thread.sleep(4000);
+        //Thread.sleep(4000);
     }
 
     @Test

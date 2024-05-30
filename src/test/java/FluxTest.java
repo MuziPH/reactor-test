@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class FluxTest {
 
+    // Flux published the provided values, request of unbounded number of values
     @Test
     void firstFlux(){
         Flux.just("A","B","C")
@@ -16,6 +17,10 @@ public class FluxTest {
                 .subscribe();
     }
 
+    // Values from the list are publish with each onNext(T) call
+    // onNext(A)
+    // onNext(B)
+    // onNext(C)
     @Test
     void fluxFromIterable(){
         Flux.fromIterable(Arrays.asList("A","B","C"))
@@ -23,6 +28,9 @@ public class FluxTest {
                 .subscribe();
     }
 
+    // Range(Start Value, Number of Values)
+    // onNext(10)
+    // onNext(11)
     @Test
     void fluxFromRange(){
         Flux.range(10,5)
